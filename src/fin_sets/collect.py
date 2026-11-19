@@ -4,6 +4,8 @@
   sec-edgar-collect prices [--limit N] [--start N]   daily bars + technical signals for the SEC ticker universe
   sec-edgar-collect pm                               Polymarket + Kalshi
   sec-edgar-collect all                              everything, then cluster detection
+  sec-edgar-collect outcomes                         control index, 1/5/10/20 day returns, grade every kind
+  sec-edgar-collect replay [--step N] [--tickers N]  walk-forward replay of the price detectors on stored bars
   sec-edgar-collect stats
 """
 

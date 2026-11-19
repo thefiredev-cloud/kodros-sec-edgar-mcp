@@ -40,6 +40,7 @@ export SEC_EDGAR_USER_AGENT="my-app you@example.com"   # required by the SEC
 uv run pytest
 uv run sec-edgar-mcp                                     # stdio MCP server
 uv run sec-edgar-collect sec --days 2                    # fill the signal store
+uv run sec-edgar-collect outcomes                        # grade each signal kind against the control
 ```
 
 MCP client config:

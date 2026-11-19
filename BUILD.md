@@ -44,10 +44,17 @@ The server speaks MCP over stdio, so it waits for a client. Register it in a cli
 ## Fill the signal store (optional)
 
 ```sh
-uv run sec-edgar-collect sec --days 2
+uv run sec-edgar-collect sec --days 2       # EDGAR daily index: Form 4, 144, 8-K, 13D/G, NT, 424B, 25-NSE
+uv run sec-edgar-collect prices             # daily bars and technical signals for the ticker universe
+uv run sec-edgar-collect pm                 # Polymarket and Kalshi prediction markets
+uv run sec-edgar-collect outcomes           # control index, 1/5/10/20 day returns, grade every kind
+uv run sec-edgar-collect replay --step 5    # walk-forward replay of the price detectors on stored bars
+uv run sec-edgar-collect stats              # row counts by kind and by recent date
 ```
 
-This reads the EDGAR daily index for the last 2 days, scores signals and writes them to SQLite. Outcome grading (1, 5, 10 and 20 day forward returns) uses the same database.
+`sec` reads the EDGAR daily index for the last 2 days, scores signals and writes them to SQLite. `outcomes` builds the equal-weight control from the stored bars, resolves forward returns and grades each signal kind; run it after `sec` and `prices` have written data. `all` runs `sec`, `pm`, `prices`, cluster detection and `outcomes` in one pass.
+
+Every subcommand except `stats` needs `SEC_EDGAR_USER_AGENT` and takes an exclusive lock in the database directory, so two collectors cannot double the SEC request rate.
 
 ## Files it writes
 
