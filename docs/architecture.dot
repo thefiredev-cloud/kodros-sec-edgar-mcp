@@ -1,0 +1,22 @@
+digraph "kodros-sec-edgar-mcp architecture" {
+  rankdir=TB; bgcolor="white"; pad=0.3; nodesep=0.45; ranksep=0.7;
+  node [shape=box, style="rounded,filled", fillcolor="#f6f6f8", color="#c9c9d1", fontname="Helvetica,Arial,sans-serif", fontsize=12, fontcolor="#1b1b1f", margin="0.18,0.1", penwidth=1.4];
+  edge [color="#5c5c66", fontname="Helvetica,Arial,sans-serif", fontsize=10, fontcolor="#5c5c66", arrowsize=0.8];
+  cli [label="MCP client"];
+  srv [label="server.py\n18 fs_* tools", color="#c2410c", penwidth=2.2, fillcolor="#fff7ed"];
+  core [label="core.py\nHTTP, cache, EDGAR normalizing"];
+  sec [label="sec.gov and data.sec.gov\n8 req/s, contact User-Agent"];
+  cache [label="Disk cache"];
+  col [label="sec-edgar-collect CLI"];
+  sig [label="signals_sec.py\nsignals_mkt.py"];
+  db [label="SQLite signal store"];
+  out [label="outcomes.py\n1, 5, 10, 20 day returns"];
+  cli -> srv [label="stdio"];
+  srv -> core [];
+  core -> sec [];
+  core -> cache [];
+  col -> sig [];
+  sig -> db [];
+  out -> db [];
+  srv -> db [];
+}

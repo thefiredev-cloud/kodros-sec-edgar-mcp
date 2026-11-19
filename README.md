@@ -18,6 +18,8 @@ flowchart LR
   Server --> DB
 ```
 
+Static diagram: [docs/architecture.svg](docs/architecture.svg). Step-by-step build: [BUILD.md](BUILD.md).
+
 `core.py` has no MCP imports, so it tests offline. The tools cover company lookup, reported XBRL series with restatements flagged, a fundamentals snapshot, side-by-side comparison of up to 8 companies, reading one Item of a filing, Form 4 insider trades, price history and a DCF calculator that fetches nothing. A collector sweeps the EDGAR daily index and grades each signal type against an equal-weight control. No language model sits in the data path. Missing data comes back as null, never zero.
 
 ## Stack
