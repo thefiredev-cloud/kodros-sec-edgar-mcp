@@ -4,6 +4,12 @@ A read-only MCP server that gives an AI assistant numbers from SEC EDGAR filings
 
 Part of the [Kodros](https://kodros.ai) local AI stack.
 
+## On your hardware
+
+- Does: gives any MCP client numbers from SEC filings. The client decides which model it uses, local or not.
+- Needs: Python 3.12 on any machine. No GPU. No language model sits in the data path.
+- Network use: it reads public data over the internet from sec.gov and data.sec.gov. Price history uses Yahoo's unofficial chart endpoint, and prediction-market reads use public Polymarket and Kalshi APIs. The cache and the signal database stay on your disk.
+
 ## How it works
 
 ```mermaid
