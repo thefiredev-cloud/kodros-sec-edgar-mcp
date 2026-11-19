@@ -46,7 +46,9 @@ def rsi(closes: list[float], n: int = 14) -> float | None:
         ag = (ag * (n - 1) + max(d, 0)) / n
         al = (al * (n - 1) + max(-d, 0)) / n
     if al == 0:
-        return 100.0
+        # 100 needs at least one gain. A series with no gains and no losses makes the
+        # ratio undefined, so report null; 100 there would emit a false overbought signal.
+        return None if ag == 0 else 100.0
     return 100 - 100 / (1 + ag / al)
 
 

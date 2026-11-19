@@ -101,6 +101,14 @@ def test_rsi_extremes():
     assert M.rsi(list(range(40, 1, -1))) < 1
 
 
+def test_flat_series_has_no_rsi_and_no_false_overbought_signal():
+    # A price that never moves has no gains and no losses, so RSI is undefined, not 100.
+    assert M.rsi([50.0] * 40) is None
+    # 300 flat, liquid bars used to emit rsi_overbought (bearish) off that bogus 100.
+    kinds = {s["kind"] for s in M.price_signals("FLAT", _bars([25.0] * 300, [2_000_000] * 300))}
+    assert "rsi_overbought" not in kinds and "rsi_oversold" not in kinds
+
+
 def test_breakout_needs_history_and_fires():
     closes = [100 + (i % 5) for i in range(260)] + [130]
     vols = [1_000_000] * 260 + [4_000_000]
